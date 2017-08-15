@@ -7,27 +7,27 @@ public class PercolationStats {
     private double vMean;
     private double vStdDev;
 
-    public PercolationStats(int N, int T) {
-        if (N <= 0 || T <= 0)
+    public PercolationStats(int n, int t) {
+        if (n <= 0 || t <= 0)
             throw new java.lang.IllegalArgumentException();
 
-        xValues = new double[T];
+        xValues = new double[t];
 
-        for (int i = 0; i < T; ++i) {
+        for (int i = 0; i < t; ++i) {
             int count = 0;
-            Percolation p = new Percolation(N);
+            Percolation p = new Percolation(n);
             boolean bPercolate = false;
 
             while (!bPercolate) {
-                int pI = StdRandom.uniform(1, N + 1);
-                int pJ = StdRandom.uniform(1, N + 1);
+                int pI = StdRandom.uniform(1, n + 1);
+                int pJ = StdRandom.uniform(1, n + 1);
                 if (!p.isOpen(pI, pJ)) {
                     p.open(pI, pJ);
                     ++count;
                     bPercolate = p.percolates();
                 }
             }
-            xValues[i] = (double) count / (double) (N * N);
+            xValues[i] = (double) count / (double) (n * n);
         }
 
         vMean = StdStats.mean(xValues);
@@ -54,10 +54,10 @@ public class PercolationStats {
         if (args.length < 2) {
             throw new java.lang.IllegalArgumentException();
         }
-        int N = Integer.parseInt(args[0]);
-        int T = Integer.parseInt(args[1]);
+        int n = Integer.parseInt(args[0]);
+        int t = Integer.parseInt(args[1]);
 
-        PercolationStats ps = new PercolationStats(N, T);
+        PercolationStats ps = new PercolationStats(n, t);
         double mean = ps.mean();
         double stddev = ps.stddev();
         double confLow = ps.confidenceLo();
